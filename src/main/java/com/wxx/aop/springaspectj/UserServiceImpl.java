@@ -10,8 +10,9 @@ public class UserServiceImpl {
         System.out.println("jdk proxy add2");
     }
 
-    public void delete() {
+    public String delete() {
         System.out.println("jdk proxy delete2");
+        return "hello";
     }
 
     public void select() {
