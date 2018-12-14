@@ -1,7 +1,5 @@
 package com.wxx.aop.springaspectj;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.JoinPoint;
 
 /**
