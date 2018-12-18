@@ -6,6 +6,7 @@ import com.wxx.aop.springjdbc.domain.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.List;
 
@@ -14,7 +15,6 @@ import java.util.List;
  * Created by wuxinxin on 2018/12/18.
  */
 public class SpringJdbcTest {
-
 
     public static void main(String[] args) {
         jdbcApiTest3();
