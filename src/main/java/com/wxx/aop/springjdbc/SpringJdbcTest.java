@@ -7,6 +7,8 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+
 /**
  * spring jdbc 编程
  * Created by wuxinxin on 2018/12/18.
@@ -15,9 +17,32 @@ public class SpringJdbcTest {
 
 
     public static void main(String[] args) {
-        jdbcApiTest2();
+        jdbcApiTest3();
     }
 
+    /**
+     * JdbcDaoSuppor
+     * 使用容器的依赖注入
+     */
+    private static void jdbcApiTest3(){
+        String path="beans31.xml";
+
+        ClassPathXmlApplicationContext classPathXmlApplicationContext=new ClassPathXmlApplicationContext(path);
+
+        com.wxx.aop.springjdbc.dao1.UserDao userDao = classPathXmlApplicationContext.getBean("userDao", com.wxx.aop.springjdbc.dao1.UserDao.class);
+
+        List<User> all = userDao.findAll();
+
+        for (int i = 0; i < all.size(); i++) {
+            System.out.println(all.get(i));
+        }
+
+    }
+
+    /**
+     * jdbctemplate
+     * 使用容器的依赖注入
+     */
     private static void jdbcApiTest2(){
         User user=new User();
 
@@ -34,6 +59,10 @@ public class SpringJdbcTest {
         userDao.update(user);
     }
 
+    /**
+     * jdbctemplate
+     * 使用原始api
+     */
     private static  void  jdbcApiTest1(){
 
         User user=new User();

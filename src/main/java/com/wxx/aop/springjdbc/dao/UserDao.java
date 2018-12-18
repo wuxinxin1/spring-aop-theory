@@ -4,6 +4,7 @@ import com.wxx.aop.springjdbc.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
+ * 直接注入jdbcTemplate
  * Created by wuxinxin on 2018/12/18.
  */
 public class UserDao {
