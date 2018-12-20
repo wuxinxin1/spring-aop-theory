@@ -36,6 +36,7 @@
     <bean id="proxyAccountService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="proxyInterfaces" value="com.wxx.aop.spring_jdbc_tx2.service.AccountService"/>
         <property name="target" ref="accountService"/>
+        <property name="transactionManager" ref="txManage"/>
 
         <property name="transactionAttributes" >
             <props>
