@@ -1,11 +1,9 @@
 package com.wxx.aop.springaspectj;
 
-import com.wxx.aop.springaspectj.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
- * 使用springaop自动生成一批代理对象
  * Created by wuxinxin on 2018/12/13.
  */
 public class Test {

@@ -11,8 +11,14 @@
 
     <aop:config>
         <aop:aspect ref="myAspect">
-            <aop:pointcut id="mypoint" expression="execution(* com.wxx.aop.springaspectj.UserServiceImpl.*(..))"/>
-            <aop:before method="berore" pointcut-ref="mypoint"/>
+            <aop:pointcut id="mypoint" expression="execution(* com.wxx.aop.springaspectj.UserServiceImpl.*(..)))"/>
+
+            <!--前置通知-->
+            <!-- <aop:before method="berore" pointcut-ref="mypoint"/>-->
+
+            <!--后置通知-->
+            <aop:after-returning method="afterReturning" pointcut-ref="mypoint" returning="object"/>
+
         </aop:aspect>
     </aop:config>
 </beans>
