@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--使用的是c3p0连接池-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/spring"/>
+        <property name="user" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <!--JdbcDaoSuppor会直接创建jdbctemplate,只需要直接注入数据源即可-->
+    <bean id="accountDao" class="com.wxx.aop.spring_jdbc_tx2.dao.impl.AccountDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <bean id="accountService" class="com.wxx.aop.spring_jdbc_tx2.service.impl.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"/>
+    </bean>
+
+    <!--利用生成代理对象，进行事务控制-->
+    <!--
+       1.生成代理类（对象）需要接口
+       2.生成代理对象需要目标对象
+       3.由于生成的是事务代理对象（类），所以还需要配置事务详情
+
+       <prop key="transfer">PROPAGATION_REQUIRED,ISOLATION_DEFAULT,+Exception</prop>
+       默认的事务传播性，已经默认使用数据库的事务隔离级别，+Exception代表发送某种异常，还是提交事务
+
+       <prop key="transfer">PROPAGATION_REQUIRED,ISOLATION_DEFAULT,-Exception</prop>
+       默认的事务传播性，已经默认使用数据库的事务隔离级别，-Exception代表发送某种异常，回滚事务
+    -->
+    <bean id="proxyAccountService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="proxyInterfaces" value="com.wxx.aop.spring_jdbc_tx2.service.AccountService"/>
+        <property name="target" ref="accountService"/>
+
+        <property name="transactionAttributes" >
+            <props>
+                <prop key="transfer">PROPAGATION_REQUIRED,ISOLATION_DEFAULT,-Exception</prop>
+            </props>
+        </property>
+    </bean>
+
+
+
+    <!--创建事务管理器,创建事务管理器需要connect,connect需要数据源-->
+    <bean id="txManage" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>
